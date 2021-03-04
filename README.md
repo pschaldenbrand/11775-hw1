@@ -1,9 +1,20 @@
 # 11-775 Large-Scale Multimedia Analysis
 
-Peter Schaldenbrand pschalde<br/>
+Peter Schaldenbrand <br/>
 Spring 2021<br/>
-Homework 1
+Homework 1 <br/>
+Andrew ID: pschalde <br/>
+GitHub ID: pschaldenbrand <br/>
+Kaggle ID: pittsburghskeet
 
+
+## Validation
+
+For experimenting with features and parameters, I used 5-fold cross validation.  80% of the data would be used to train and 20% would be validated.  This is done 5 times with different folds each time and the validation accuracies were averaged and used for comparison.  I used Top-1 accuracy as it is conventional and is used in the leaderboard.
+
+When training my models for non-experimentation, I would use early stopping in the models as a form of regularization.  10% of the training data was used as validation and if the training went 10 epochs without lowering the validation accuracy, the training would stop.
+
+I did not use the test data for validation.  Meaning, I only submitted my results to kaggle after the model was determined to fit well using the 5-fold cross validation described above.  I didn't want my results to be finely tuned to the test data.
 
 ## SoundNet
 
@@ -70,8 +81,44 @@ I started my search for the best model following section "SoundNet Features".  I
 
 Then I tried to see if a bigger model would result in better performance, I tried two 100 hidden unit layers, and various amounts of 1000 hidden unit layers.  None of these models performed better in terms of validation accuracy in 5-fold cross validation.  All attempts at decreasing the hidden units from 100 failed. Even trying two layers with 50 hidden units in each resulted in poorer validation accuracy.
 
-My best model also uses data augmentation.  The training data is tripled with the extra samples having zero-mean 0.1 standard deviation gaussian noised added to it.
+My best model also uses data augmentation.  The training data is tripled with the extra samples having zero-mean 0.1 standard deviation gaussian noised added to it.  This resulted in a validation accuracy of 67.1%.
+
+To reproduce these results, run the instructions for generating the soundnet features above, then run ```python2 train_best.py```. And to test it ```python2 test_best.py models/best.model labels/test_for_student.label best.csv``` Training it takes about 50 seconds.  Running it on the test labels takes 5.1 seconds.  The kaggle results indicate a 67.5% accuracy which is surprising since that is better than the validation accuracy.
+
+The 5-fold cross validation confusion matrix follows where the row indicates the true value and the column indicates the predicted value.
+
+[[427  41  15   2  22  22   7  24   9  32]
+ [ 33 412  32   8  23   2   6  19  16  50]
+ [ 22  17 361  35  35   4  23  76  18  10]
+ [  7   8  55 362   8   4  20  28   9   8]
+ [ 39  11  57   2 415  21   9  40   2   5]
+ [ 25   1  11   0  22 445   4   7   4   7]
+ [  5  13  22   8   4   8 402  57  65  17]
+ [ 21   7  87  26  27   2  45 346  28  12]
+ [  7  13  14   3   2   5  68  33 247  28]
+ [ 47  66  26   7  14   3  15  21  29 373]]
+
+with the following as class indices:
+
+dribbling_basketball,0
+mowing_lawn,1
+playing_guitar,2
+playing_piano,3
+playing_drums,4
+tapping_pen,5
+blowing_out_candles,6
+singing,7
+tickling,8
+shoveling_snow,9
+
+There are a few standouts in the confusion matrix: THe model predicted videos were of singing 76 when the video was actually of playing guitar.  This also went the other way where the model predicted playing guitar 87 times on videos that were actually of singing.  Singing and guitar playing are both musical, so it makes sense that these would be confused often.  Another highly confused class was the model predicting the videos was mowing the lawn and shoveling snow.  On the other hand, the model was extremely accurate at distinguishing the difference between mowing lawn and tapping pen.  Looking at the diagonal, you can see that the model often got dribbling basketabll, and tapping pen correct, but messed up on tickling and singing often.
+
+
 
 ## Kaggle
 
 kaggle username @pittsburghskeet
+
+## AWS
+
+I performed this work on my own machine, so I still have all of my AWS credits remaining.

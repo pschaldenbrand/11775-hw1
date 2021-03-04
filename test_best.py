@@ -7,6 +7,7 @@ from sklearn.neural_network import MLPClassifier
 import pickle
 import sys
 import numpy as np
+import time
 
 # Apply the MLP model to the testing videos;
 # Output prediction class for each video
@@ -24,7 +25,7 @@ soundnet_layers = [18, 21]
 if __name__ == '__main__':
 
   args = parser.parse_args()
-
+  start_time = time.time()
   # 1. load mlp model
   mlp = pickle.load(open(args.model_file, "rb"))
 
@@ -68,3 +69,5 @@ if __name__ == '__main__':
     f.writelines("Id,Category\n")
     for i, pred_class in enumerate(pred_classes):
       f.writelines("%s,%d\n" % (video_ids[i], pred_class))
+
+  print('run time', time.time() - start_time, 'seconds')

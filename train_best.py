@@ -16,7 +16,7 @@ import time
 list_videos = 'labels/trainval.csv'
 soundnet_dir = 'SoundNet-tensorflow/output'
 soundnet_layers = [18, 21]
-output_file = 'models/best_augmented.model'
+output_file = 'models/best.model'
 
 factor = 3
 std = 0.1
