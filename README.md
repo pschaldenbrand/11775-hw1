@@ -46,6 +46,8 @@ Using the MFCC 50 k-means bag of features representation with SVM, resulted in 2
 
 Training SVM on the 200 means bog of features, led to an a validation accuracy of 10% indicating that the model was as good as a random guess.  Perhaps with 200 means, the algorithm wasn't able to converge well and the means became meaningless (no pun intended).  This result led me to want to try less than 50 means, hypothesizing that 50 means is higher than optimal.  25 means too 679 seconds to train, and led to a 32.2% accuracy.  The accuracy with 25 means was better than 200 but worse than 50. To see if even less means lead to a better validation accuracy, I tried 10 means, however, this led to an inferior 29% 5 fold cross validation accuracy.
 
+For my mfcc.csv output, I used a 1000 hidden unit single layer MLP with 5 times data augmentation (described below) using the concatenation of the bag-of-features sizes 10, 25, and 50.
+
 ## SVM Training
 
 Using the out of the box code for the SVM classifier using MFCC data with 50 means led to a 22.6% 5-fold cross validation average accuracy. 
