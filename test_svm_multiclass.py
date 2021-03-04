@@ -19,6 +19,7 @@ parser.add_argument("feat_dim", type=int)
 parser.add_argument("list_videos")
 parser.add_argument("output_file")
 parser.add_argument("--feat_appendix", default=".csv")
+parser.add_argument("--layer", type=int, default=25) # THe soundnet layer
 
 if __name__ == '__main__':
 
@@ -38,10 +39,17 @@ if __name__ == '__main__':
     # pdb.set_trace()
     #feat_filepath = os.path.join(args.feat_dir, video_id + ".kmeans.csv")
     feat_filepath = os.path.join(args.feat_dir, video_id + args.feat_appendix)
-    if not os.path.exists(feat_filepath):
-      feat_list.append(np.zeros(args.feat_dim))
+    if ('SoundNet' in args.feat_dir):
+      feat_filepath = os.path.join(args.feat_dir, video_id + 'tf_fea{}.npy'.format(str(args.layer).zfill(2)))
+      if os.path.exists(feat_filepath):
+        feat_list.append(np.mean(np.load(feat_filepath), axis=0))
+      else:
+        feat_list.append(np.zeros(feat_list[-1].shape))
     else:
-      feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype='float'))
+      if not os.path.exists(feat_filepath):
+        feat_list.append(np.zeros(args.feat_dim))
+      else:
+        feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype='float'))
 
   X = np.array(feat_list)
 
