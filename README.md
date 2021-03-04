@@ -87,7 +87,7 @@ To reproduce these results, run the instructions for generating the soundnet fea
 
 The 5-fold cross validation confusion matrix follows where the row indicates the true value and the column indicates the predicted value.
 
-[[427  41  15   2  22  22   7  24   9  32]
+<!-- [[427  41  15   2  22  22   7  24   9  32]
  [ 33 412  32   8  23   2   6  19  16  50]
  [ 22  17 361  35  35   4  23  76  18  10]
  [  7   8  55 362   8   4  20  28   9   8]
@@ -109,7 +109,20 @@ tapping_pen,5
 blowing_out_candles,6
 singing,7
 tickling,8
-shoveling_snow,9
+shoveling_snow,9 -->
+
+|                             | dribbling <br>basketball | mowing <br>lawn | playing <br>guitar | playing <br>piano | playing <br>drums | tapping<br> pen | blowing <br>out <br>candles | singing | tickling | shoveling <br>snow |
+|-----------------------------|--------------------------|-----------------|--------------------|-------------------|-------------------|-----------------|-----------------------------|---------|----------|--------------------|
+| dribbling <br>basketball    | 427                      | 41              | 15                 | 2                 | 22                | 22              | 7                           | 24      | 9        | 32                 |
+| mowing <br>lawn             | 33                       | 412             | 32                 | 8                 | 23                | 2               | 6                           | 19      | 16       | 50                 |
+| playing <br>guitar          | 22                       | 17              | 361                | 35                | 35                | 4               | 23                          | 76      | 18       | 10                 |
+| playing <br>piano           | 7                        | 8               | 55                 | 362               | 8                 | 4               | 20                          | 28      | 9        | 8                  |
+| playing <br>drums           | 39                       | 11              | 57                 | 2                 | 415               | 21              | 9                           | 40      | 2        | 5                  |
+| tapping<br> pen             | 25                       | 1               | 11                 | 0                 | 22                | 445             | 4                           | 7       | 4        | 7                  |
+| blowing <br>out <br>candles | 5                        | 13              | 22                 | 8                 | 4                 | 8               | 402                         | 57      | 65       | 17                 |
+| singing                     | 21                       | 7               | 87                 | 26                | 27                | 2               | 45                          | 346     | 28       | 12                 |
+| tickling                    | 7                        | 13              | 14                 | 3                 | 2                 | 5               | 68                          | 33      | 247      | 28                 |
+| shoveling <br>snow          | 47                       | 66              | 26                 | 7                 | 14                | 3               | 15                          | 21      | 29       | 373                |
 
 There are a few standouts in the confusion matrix: THe model predicted videos were of singing 76 when the video was actually of playing guitar.  This also went the other way where the model predicted playing guitar 87 times on videos that were actually of singing.  Singing and guitar playing are both musical, so it makes sense that these would be confused often.  Another highly confused class was the model predicting the videos was mowing the lawn and shoveling snow.  On the other hand, the model was extremely accurate at distinguishing the difference between mowing lawn and tapping pen.  Looking at the diagonal, you can see that the model often got dribbling basketabll, and tapping pen correct, but messed up on tickling and singing often.
 
